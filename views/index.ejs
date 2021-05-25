@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>Room</title>
+      <script type="text/javascript">
+        const apiKey = '<%=apiKey %>';
+        const sessionId = '<%=sessionId %>';
+        const token = '<%=token %>';
+        const roomId = '<%=roomId %>';
+        const pinCode = '<%=pinCode %>';
+        const conferenceNumber = '<%=conferenceNumber %>';
+        let connectionId;
+        const dialOut = () => {
+          fetch(`/dial-out?roomId=${roomId}`)
+          .then(response => response.json())
+          .then((sipData) => {
+            connectionId = sipData.connectionId;
+          }).catch((error) => {
+              alert(`There was an error dialing-out`);
+          })
+        };
+        const hangUp = () => {
+          fetch(`/hang-up?roomId=${roomId}`)
+          .then(response => response)
+          .then((data) => {
+              console.log('dial-out-hang-up-complete');
+          }).catch((error) => {
+              alert(`There was an error hanging up`);
+          })
+        };
+      </script>
+      <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>            
+      <script src="/js/opentok.js"></script>
+  </head>
+  <body>
+      <div id="publisher"></div>
+      <div id="subscribers"></div>
+      <div>Token: <%=token %></div>
+      <div>Pin Code: <%=pinCode %></div>
+  </body>
+</html>
